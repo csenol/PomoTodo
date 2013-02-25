@@ -28,7 +28,7 @@ public class GetTodosRequest extends Request {
 
     public GetTodosRequest(AuthToken token, Todo filter) throws ToodledoApiException {
         super();
-        this.url = URL + token.getKey() + ";comp=0;f=xml";
+        this.url = URL + token.getKey() + ";comp=0;fields=tag;f=xml";
         // TODO: Add filter options
         if (filter != null) {
 

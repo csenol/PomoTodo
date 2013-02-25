@@ -35,6 +35,7 @@ import net.juancarlosfernandez.pomotodo.toodledo.xml.GetTodosParser;
 import net.juancarlosfernandez.pomotodo.toodledo.xml.GetUserIdParser;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ToodledoApiImpl implements ToodledoApi {
 
@@ -59,7 +60,14 @@ public class ToodledoApiImpl implements ToodledoApi {
         Request getTodosRequest = new GetTodosRequest(auth, filter);
         GetTodosResponse response = (GetTodosResponse) getTodosRequest.getResponse();
 
-        return new GetTodosParser(response.getXmlResponseContent()).getTodos();
+        List<Todo> unfiltered =  new GetTodosParser(response.getXmlResponseContent()).getTodos();
+	List<Todo> filtered = new ArrayList<Todo> ();
+	for(Todo t: unfiltered){
+	    if(t.getTag().contains("pomodoro")){
+		filtered.add(t);
+	    }
+	}
+	return filtered;
     }
 
     public AuthToken initialize(String username, String password, String sessionToken) throws ToodledoApiException {
